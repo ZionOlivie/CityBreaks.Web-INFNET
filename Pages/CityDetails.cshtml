@@ -1,0 +1,39 @@
+﻿@page "{name}"
+@model CityBreaks.Web.Pages.CityDetailsModel
+@{
+    ViewData["Title"] = "Detalhes da cidade";
+}
+
+<div class="container mt-4">
+    <h2>@Model.Cidade.Name</h2>
+    <h5 class="text-muted">País: @Model.Cidade.Country?.CountryName</h5>
+    <hr />
+
+    <h4>Informaçao</h4>
+    @if (Model.Cidade.Properties != null && Model.Cidade.Properties.Any())
+    {
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Nome do Local</th>
+                    <th>Preço por Noite</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var prop in Model.Cidade.Properties)
+                {
+                    <tr>
+                        <td>@prop.Name</td>
+                        <td>R$ @prop.PricePerNight.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nenhuma propriedade encontrada nesta cidade.</p>
+    }
+
+    <a asp-page="/Index" class="btn btn-secondary mt-3">Voltar</a>
+</div>

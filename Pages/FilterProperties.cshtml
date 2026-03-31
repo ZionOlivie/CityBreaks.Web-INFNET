@@ -1,0 +1,63 @@
+﻿@page
+@model CityBreaks.Web.Pages.FilterPropertiesModel
+@{
+    ViewData["Title"] = "Buscar Propriedades";
+}
+
+<div class="container mt-4">
+    <h2>Busca Avançada de Destinos</h2>
+    <hr />
+
+    <form method="get" class="row g-3 bg-light p-4 rounded shadow-sm mb-5">
+        <div class="col-md-3">
+            <label class="form-label">Nome da propriedade</label>
+            <input type="text" asp-for="PropertyName" class="form-control" placeholder="Ex: Palace..." />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Cidade</label>
+            <input type="text" asp-for="CityName" class="form-control" placeholder="Ex: Rio..." />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Preço minimo (R$)</label>
+            <input type="number" asp-for="MinPrice" class="form-control" step="0.01" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Preço maximo (R$)</label>
+            <input type="number" asp-for="MaxPrice" class="form-control" step="0.01" />
+        </div>
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+            <a asp-page="/FilterProperties" class="btn btn-outline-secondary">Limpar busca</a>
+        </div>
+    </form>
+
+    <h4>Resultados Encontrados: @Model.Resultados.Count</h4>
+    @if (Model.Resultados.Any())
+    {
+        <table class="table table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Propriedade</th>
+                    <th>Cidade</th>
+                    <th>Preço por Noite</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Resultados)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Name</td>
+                        <td>@item.City?.Name</td>
+                        <td class="text-success fw-bold">R$ @item.PricePerNight.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Nenhuma propriedade atende aos critérios de busca
+        </div>
+    }
+</div>

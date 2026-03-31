@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Portal City Breaks";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Destinos CityBreaks</h1>
+    <p>Encontre a propriedade perfeita para a sua viagem.</p>
+</div>
+
+<div class="row">
+    @foreach (var cidade in Model.Cidades)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@cidade.Name - @cidade.Country?.CountryName (@cidade.Country?.CountryCode)</h5>
+
+                    <a asp-page="/CityDetails" asp-route-name="@cidade.Name" class="btn btn-sm btn-light text-primary fw-bold">Ver Detalhes</a>
+                </div>
+
+                <div class="card-body">
+                    <h6>Propriedades Disponíveis:</h6>
+                    @if (cidade.Properties != null && cidade.Properties.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var prop in cidade.Properties)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        @prop.Name
+                                        <span class="badge bg-success rounded-pill ms-2">
+                                            R$ @prop.PricePerNight.ToString("N2") / noite
+                                        </span>
+                                    </div>
+                                    <div class="ms-3">
+                                        <a asp-page="/EditProperty" asp-route-id="@prop.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                                        <a asp-page="/DeleteProperty" asp-route-id="@prop.Id" class="btn btn-sm btn-outline-danger">Excluir</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Nenhuma propriedade cadastrada ainda.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

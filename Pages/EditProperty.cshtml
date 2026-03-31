@@ -1,0 +1,31 @@
+﻿@page
+@model CityBreaks.Web.Pages.EditPropertyModel
+@{
+    ViewData["Title"] = "Editar propriedade";
+}
+
+<div class="container mt-4">
+    <h2>Editar Propriedade Turística</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <input type="hidden" asp-for="Propriedade.Id" />
+
+                <div class="form-group mb-3">
+                    <label class="control-label">Nome do Estabelecimento</label>
+                    <input asp-for="Propriedade.Name" class="form-control" required />
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="control-label">Preço por Noite (R$)</label>
+                    <input asp-for="Propriedade.PricePerNight" class="form-control" type="number" step="0.01" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                <a asp-page="/Index" class="btn btn-outline-secondary ms-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
